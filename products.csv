@@ -1,0 +1,18 @@
+sku,name,price,quantity,category,description,status,createdAt,updatedAt
+RC-ETH-LR-250,Ethiopia Yirgacheffe Light Roast (250g),13.50,42,Coffee,Bright and floral with notes of jasmine, citrus, and honey. Single-origin from Yirgacheffe, Ethiopia.,IN_STOCK,2025-10-15T09:32:00Z,2025-11-05T12:20:00Z
+RC-COL-MR-250,Colombian Supremo Medium Roast (250g),12.99,18,Coffee,Balanced, nutty, and smooth with hints of chocolate and caramel. Our best-selling everyday roast.,LOW_STOCK,2025-10-12T10:20:00Z,2025-11-06T15:10:00Z
+RC-SUM-DR-250,Sumatra Mandheling Dark Roast (250g),14.25,5,Coffee,Earthy and full-bodied with deep chocolate undertones. Perfect for espresso lovers.,LOW_STOCK,2025-10-18T08:45:00Z,2025-11-07T11:05:00Z
+RC-BRA-MR-1000,Brazil Cerrado Medium Roast (1kg),38.00,0,Coffee,Smooth and nutty with low acidity. Ideal for drip or cold brew.,OUT_OF_STOCK,2025-10-05T07:10:00Z,2025-11-08T14:00:00Z
+RC-GUA-LR-250,Guatemala Antigua Light Roast (250g),13.75,27,Coffee,Sweet aroma of toffee and cocoa, with a bright, crisp finish. Washed-process beans from Antigua region.,IN_STOCK,2025-09-30T11:22:00Z,2025-11-07T09:45:00Z
+RC-KEN-MR-250,Kenya AA Medium Roast (250g),14.99,12,Coffee,Vibrant acidity and complex notes of blackcurrant and citrus. Ideal for pour-over brewing.,LOW_STOCK,2025-09-29T09:10:00Z,2025-11-06T18:05:00Z
+RC-DEC-MR-250,House Blend Decaf Medium Roast (250g),11.50,30,Coffee,Swiss Water Process decaf with smooth caramel flavor and mild acidity.,IN_STOCK,2025-10-08T13:15:00Z,2025-11-03T11:00:00Z
+RC-HOU-MR-500,House Blend Medium Roast (500g),21.00,0,Coffee,Our signature blend combining Central and South American beans for a balanced, versatile cup.,BACK_ORDERED,2025-10-11T08:00:00Z,2025-11-07T16:00:00Z
+RC-ESP-DR-250,Espresso Reserve Dark Roast (250g),14.75,45,Coffee,Rich crema and smooth body, roasted for espresso perfection. Blend of South American and Asian beans.,IN_STOCK,2025-10-10T10:40:00Z,2025-11-09T08:00:00Z
+RC-COL-DR-250,Colombian Supremo Dark Roast (250g),13.25,0,Coffee,Roasted longer for a smoky, bold profile with chocolate finish. Small-batch limited run.,DISCONTINUED,2025-09-15T12:20:00Z,2025-10-30T09:00:00Z
+RC-GEA-FP,Stainless Steel French Press (1L),29.99,8,Gear,Durable double-wall French press with fine mesh filter for a smooth brew.,LOW_STOCK,2025-09-22T09:00:00Z,2025-11-08T09:00:00Z
+RC-GEA-GRIND,Conical Burr Coffee Grinder,89.99,16,Gear,Precision burr grinder with adjustable settings for espresso to cold brew.,IN_STOCK,2025-09-24T07:00:00Z,2025-11-08T13:00:00Z
+RC-GEA-POUR,Glass Pour-Over Kit,34.50,10,Gear,Complete pour-over kit with borosilicate glass dripper and carafe.,IN_STOCK,2025-09-26T11:30:00Z,2025-11-05T08:30:00Z
+RC-GEA-SCALE,Digital Coffee Scale,25.00,0,Gear,Compact digital scale with timer function for precise brewing control.,OUT_OF_STOCK,2025-09-20T14:00:00Z,2025-11-04T15:00:00Z
+RC-MER-MUG,RoastCraft Ceramic Mug,14.00,55,Merch,Matte black ceramic mug with the RoastCraft logo, 350ml capacity.,IN_STOCK,2025-09-19T09:00:00Z,2025-11-09T10:00:00Z
+RC-MER-TOTE,RoastCraft Canvas Tote Bag,18.00,24,Merch,Durable canvas tote for carrying your beans and gear in style.,IN_STOCK,2025-09-17T10:00:00Z,2025-11-06T10:00:00Z
+RC-MER-TEE,RoastCraft Logo T-Shirt,22.00,3,Merch,Soft cotton unisex tee printed with the RoastCraft logo.,LOW_STOCK,2025-09-16T08:00:00Z,2025-11-05T12:00:00Z
