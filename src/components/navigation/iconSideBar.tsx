@@ -20,6 +20,9 @@ import Tooltip from "@mui/material/Tooltip";
 import NavLink from "@/components/navigation/navlink";
 
 
+
+const ICON_PROPS = {color:'primary.main', fontSize:30}
+
 export function IconSideBar():React.JSX.Element {
 
     const dispatch = useDispatch();
@@ -34,8 +37,10 @@ export function IconSideBar():React.JSX.Element {
                 left:0,
                 top:70,
                 width:60,
+                display: {xs:'none',md:'flex'},
                 height:'100vh',
                 bgcolor:'background.paper',
+                color:'default',
                 zIndex: (theme) => theme.zIndex.drawer + 1}}
             onMouseEnter={() => dispatch(toggleSidePanel())}
 
@@ -45,53 +50,53 @@ export function IconSideBar():React.JSX.Element {
             <Toolbar
                 sx={{width:60,
                     height:'calc(100vh - 70px)',
-                    display:'flex',
+                    display: {xs:'none',md:'flex'},
                     flexDirection:'column',
-                    justifyContent:'flex-start',
+                    justifyContent:'space-between',
                     alignItems:'center',
                 }}   >
                 <Box sx={{mt:1}}  >
 
                     <Tooltip title="Main View" placement='right-start' arrow >
                         <Box>
-                            <NavLink href="/" icon={<HomeIcon />}  />
+                            <NavLink href="/" icon={<HomeIcon sx={ICON_PROPS} />}  />
                         </Box>
                     </Tooltip>
                     <Tooltip title="Customer info and orders"  placement='right-start' arrow>
                         <Box>
-                            <NavLink href="/customers" icon={<PeopleIcon />} />
+                            <NavLink href="/customers" icon={<PeopleIcon sx={ICON_PROPS} />} />
                         </Box>
                     </Tooltip>
                     <Tooltip title="Products and Inventory"  placement='right-start' arrow>
                         <Box>
-                            <NavLink href="/products" icon={<InventoryIcon />} />
+                            <NavLink href="/products" icon={<InventoryIcon sx={ICON_PROPS} />} />
                         </Box>
                     </Tooltip>
                     <Tooltip title="Orders to be fulfilled"  placement='right-start' arrow>
                         <Box>
-                            <NavLink href="/orders" icon={<ShoppingCartIcon />} />
+                            <NavLink href="/orders" icon={<ShoppingCartIcon sx={ICON_PROPS} />} />
                         </Box>
                     </Tooltip>
                     <Tooltip title="Sales and reports"  placement='right-start' arrow>
                         <Box>
-                            <NavLink href="/sales" icon={<AttachMoneyIcon />} />
+                            <NavLink href="/sales" icon={<AttachMoneyIcon sx={ICON_PROPS}/>} />
                         </Box>
                     </Tooltip>
                     <Tooltip title="Messages and notifications"  placement='right-start' arrow>
                         <Box>
-                            <NavLink href="/messages" icon={<EmailIcon />} />
+                            <NavLink href="/messages" icon={<EmailIcon sx={ICON_PROPS}/>} />
                         </Box>
                     </Tooltip>
                 </Box>
                 <Box>
                     <Tooltip title="Account settings"  placement='right-start' arrow>
                         <Box>
-                            <NavLink href="/settings" icon={<SettingsIcon />} />
+                            <NavLink href="/settings" icon={<SettingsIcon sx={ICON_PROPS}/>} />
                         </Box>
                     </Tooltip>
                     <Tooltip title='Documentation and faqs'  placement='right-start' arrow>
                         <Box>
-                            <NavLink href="/help" icon={<HelpIcon />} />
+                            <NavLink href="/help" icon={<HelpIcon sx={ICON_PROPS}/>} />
                         </Box>
                     </Tooltip>
                 </Box>

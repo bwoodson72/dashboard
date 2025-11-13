@@ -1,123 +1,112 @@
 'use client'
 
-import {Drawer, Box, Typography, Container} from "@mui/material";
+
+
 import React from "react";
+import { Drawer, Box, Container, Tooltip } from "@mui/material";
+import { ClickAwayListener } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleSidePanel } from "@/features/sidePanel/sidePanelSlice";
+import { RootState } from "@/app/store";
 import NavLink from "./navlink";
 
-import {ClickAwayListener} from "@mui/material";
+// This component renders a left drawer aligned under a 70px top bar,
+// positioned adjacent to the icon rail (assumed 61px wide).
+export function SideDrawer(): React.JSX.Element {
+  const sidePanelOpen = useSelector((state: RootState) => state.sidePanel.isOpen);
+  const dispatch = useDispatch();
 
-import Tooltip from '@mui/material/Tooltip';
-
-import {useSelector, useDispatch} from "react-redux";
-import {toggleSidePanel} from "@/features/sidePanel/sidePanelSlice";
-import {RootState} from "@/app/store";
-
-
-
-/**
- * Represents the sidebar component of the application, providing navigation links and toggling functionality.
- *
- * @return {React.JSX.Element} The rendered sidebar component with navigation links and actions.
- */
-export function SideDrawer():React.JSX.Element {
+  const TOP_BAR_HEIGHT = 70;
+  const ICON_RAIL_WIDTH = 61;
 
 
-const sidePanelOpen = useSelector((state:RootState) => state.sidePanel.isOpen);
-const dispatch = useDispatch();
-
-    return (
-
-        <Drawer anchor="left" open={sidePanelOpen}
-                sx={{
-                    position:'fixed',
-                    top:70,
-                    left:61,
-                    width:250,
-                    display:'flex',
-                    flexDirection:'column',
-                    height:'calc(100vh - 70px)',
-                    justifyContent:'space-between',
-                    bgcolor:'background.paper'
-                }}
+  return (
+    <Drawer
+      anchor="left"
+      open={sidePanelOpen}
+      // Use slots/slotProps in MUI v7 instead of PaperProps
+      slotProps={{
+        paper: {
+          sx: {
+            position: 'fixed',
+            top: TOP_BAR_HEIGHT,
+            left: ICON_RAIL_WIDTH,
+            width: 250,
+            height: `calc(100dvh - ${TOP_BAR_HEIGHT}px)`,
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
+            bgcolor: 'background.paper',
+          },
+        },
+      }}
+      // Keep the Drawer mounted to avoid layout shift when toggling
+      keepMounted
+      ModalProps={{ keepMounted: true }}
+    >
+      <ClickAwayListener onClickAway={() =>sidePanelOpen&& dispatch(toggleSidePanel())}>
+        <Container
+          maxWidth="sm"
+          sx={{
+            // Fill the drawer paper
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            px: 0,
+          }}
         >
-            <ClickAwayListener onClickAway={()=>dispatch(toggleSidePanel())}>
-            <Container maxWidth='sm' sx={{
-                position:'fixed',
-                top:70,
-                left:61,
-                width:250,
-                display:'flex',
-                flexDirection:'column',
-                height:'calc(100vh - 70px)',
-                justifyContent:'space-between',
-                bgcolor:'background.paper'
-            }}>
-                {/*drawer toggle button*/}
-                {/*<Box sx={{*/}
-                {/*    width:'100%' ,*/}
-                {/*    display:'flex',*/}
-                {/*    justifyContent:'flex-end',*/}
-                {/*    alignItems:'center',*/}
-                {/*    mb:2,*/}
-                {/*    position:"absolute",*/}
-                {/*    top:0,*/}
-                {/*    right:0*/}
-                {/*}}>*/}
-                {/*<DrawerToggle >*/}
-                {/*    <CancelIcon/>*/}
-                {/*    </DrawerToggle>*/}
-                {/*</Box>*/}
-                {/*main navigation links*/}
-                <Box sx={{mt:1}}  >
+          {/* Main navigation */}
+          <Box sx={{ mt: 1, px: 1 }}>
+            <Tooltip title="Main View" placement="right-start" arrow>
 
-                    <Tooltip title="Main View" placement='right-start' arrow >
-                       <Box>
-                     <NavLink href="/" label="Home" />
-                       </Box>
-                    </Tooltip>
-                    <Tooltip title="Customer info and orders"  placement='right-start' arrow>
-                     <Box>
-                 <NavLink href="/customers" label="Customers" />
-                     </Box>
-                    </Tooltip>
-                    <Tooltip title="Products and Inventory"  placement='right-start' arrow>
-                        <Box>
+                <NavLink href="/" label="Home" />
+
+            </Tooltip>
+            <Tooltip title="Customer info and orders" placement="right-start" arrow>
+
+                <NavLink href="/customers" label="Customers" />
+
+            </Tooltip>
+            <Tooltip title="Products and Inventory" placement="right-start" arrow>
+
                 <NavLink href="/products" label="Products" />
-                        </Box>
-                    </Tooltip>
-                    <Tooltip title="Orders to be fulfilled"  placement='right-start' arrow>
-                        <Box>
+
+            </Tooltip>
+            <Tooltip title="Orders to be fulfilled" placement="right-start" arrow>
+
                 <NavLink href="/orders" label="Orders" />
-                        </Box>
-                    </Tooltip>
-                    <Tooltip title="Sales and reports"  placement='right-start' arrow>
-                        <Box>
+
+            </Tooltip>
+            <Tooltip title="Sales and reports" placement="right-start" arrow>
+
                 <NavLink href="/sales" label="Sales" />
-                        </Box>
-                    </Tooltip>
-                    <Tooltip title="Messages and notifications"  placement='right-start' arrow>
-                        <Box>
+
+            </Tooltip>
+            <Tooltip title="Messages and notifications" placement="right-start" arrow>
+
                 <NavLink href="/messages" label="Messages" />
-                        </Box>
-                    </Tooltip>
-            </Box>
 
-                {/*secondary navigation links*/}
-                <Box>
-                    <Tooltip title="Account settings"  placement='right-start' arrow>
-                        <Box>
-                    <NavLink href="/settings" label="Settings" />
-                        </Box>
-                    </Tooltip>
-                    <Tooltip title='Documentation and faqs'  placement='right-start' arrow>
-                        <Box>
-                    <NavLink href="/help" label="Help" />
-                        </Box>
-                    </Tooltip>
-                </Box>
+            </Tooltip>
+              <NavLink href="/customers/details" label="Customer Detail" />
+          </Box>
+
+          {/* Secondary navigation */}
+          <Box sx={{ px: 1, pb: 1 }}>
+            <Tooltip title="Account settings" placement="right-start" arrow>
+
+                <NavLink href="/settings" label="Settings" />
+
+            </Tooltip>
+            <Tooltip title="Documentation and faqs" placement="right-start" arrow>
+
+                <NavLink href="/help" label="Help" />
+
+            </Tooltip>
+          </Box>
         </Container>
-            </ClickAwayListener>
-        </Drawer>
-
-    )
+      </ClickAwayListener>
+    </Drawer>
+  );
 }

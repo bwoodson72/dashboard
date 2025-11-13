@@ -3,7 +3,7 @@
 import React from 'react';
 import { createTheme, ThemeProvider, ThemeOptions, Theme } from '@mui/material/styles';
 import {RootState} from "@/app/store";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 
 
 const darkTheme: ThemeOptions = {

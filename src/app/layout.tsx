@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import {AppRouterCacheProvider} from "@mui/material-nextjs/v13-appRouter";
 import "./globals.css";
 import {Grid, Container} from "@mui/material";
 import {TopBar} from "@/components/navigation/topBar";
@@ -38,6 +39,7 @@ export default function RootLayout({
     <html lang="en">
 
       <body >
+      <AppRouterCacheProvider>
 
           <ReduxProvider store={store}>
 
@@ -46,17 +48,17 @@ export default function RootLayout({
                   <CssBaseline/>
 
                   <Grid container spacing={1}>
-      <Grid size={12}>
+      <Grid size={{sm: 12}}>
       <TopBar/>
       </Grid>
-      <Grid size={2}>
+      <Grid size={{sm:2}}>
       <IconSideBar/>
           <SideDrawer/>
       </Grid>
 
 
 
-        <Grid size={10}>
+        <Grid size={{sm:10}}>
             <Container maxWidth="xl">
         {children}
             </Container>
@@ -67,7 +69,7 @@ export default function RootLayout({
     </ClientTheme>
 
           </ReduxProvider>
-
+      </AppRouterCacheProvider>
       </body>
 
     </html>

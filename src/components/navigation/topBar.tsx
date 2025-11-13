@@ -20,8 +20,8 @@ export function TopBar():React.JSX.Element{
     return (
         <>
 
-        <AppBar position="static">
-            <Toolbar>
+        <AppBar position="static" sx={{width: {xs:'100vw'}}}>
+            <Toolbar  >
                 <DrawerToggle>
                     <MenuIcon/>
                 </DrawerToggle>
@@ -32,7 +32,7 @@ export function TopBar():React.JSX.Element{
             </Toolbar>
         </AppBar>
 
-        {/*<SideDrawer />*/}
+
 
 
         </>
