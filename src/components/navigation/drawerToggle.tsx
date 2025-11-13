@@ -47,7 +47,7 @@ export function DrawerToggle({ children}: DrawerToggleProps): React.JSX.Element 
     const isOpen = useSelector((state:RootState) => state.sidePanel.isOpen);
     return (
         <Tooltip title={isOpen ? 'Close menu' : 'Open menu'}>
-            <IconButton onClick={()=>dispatch(toggleSidePanel())} aria-label="toggle drawer" edge="start" >
+            <IconButton sx={{color:'secondary.light'}} onClick={()=>dispatch(toggleSidePanel())} aria-label="toggle drawer" edge="start" >
                 {children}
             </IconButton>
         </Tooltip>

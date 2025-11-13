@@ -19,7 +19,7 @@ export function DarkModeToggle():React.JSX.Element{
     const dispatch = useDispatch();
     return (
         <IconButton aria-label="toggle dark mode">
-            {isDarkMode? <DarkModeIcon onClick={()=>dispatch(toggleDarkMode())}/> : <LightModeIcon onClick={()=>dispatch(toggleDarkMode())}/>}
+            {isDarkMode? <DarkModeIcon sx={{color:'secondary.light'}} onClick={()=>dispatch(toggleDarkMode())}/> : <LightModeIcon sx={{color:'secondary.light'}} onClick={()=>dispatch(toggleDarkMode())}/>}
         </IconButton>
     )
 }

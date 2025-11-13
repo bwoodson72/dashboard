@@ -21,7 +21,7 @@ import NavLink from "@/components/navigation/navlink";
 
 
 
-const ICON_PROPS = {color:'primary.main', fontSize:30}
+const ICON_PROPS = {color:'secondary', fontSize:30}
 
 export function IconSideBar():React.JSX.Element {
 

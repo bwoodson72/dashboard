@@ -10,7 +10,7 @@ const darkTheme: ThemeOptions = {
   palette: {
     mode: 'dark',
     primary: { main: '#9799af', dark: '#191a20', light: '#e0e7ff' },
-    secondary: { main: '#6d6d81', dark: '#40404e', light: '#9999a3' },
+    secondary: { main: '#a9a9c8', dark: '#40404e', light: '#9999a3' },
     background: { default: '#020204', paper: '#021472' },
   },
     components: {
@@ -28,10 +28,11 @@ const lightTheme: ThemeOptions = {
         mode: 'light',
         primary: {
             main: '#1948d2',
-            light: '#4e47db',
+            light: '#726dd6',
         },
         secondary: {
-            main: '#278cb0',
+            main: '#2749b0',
+            dark: '#091027',
         },
         background: {
             paper: '#afafb9',
