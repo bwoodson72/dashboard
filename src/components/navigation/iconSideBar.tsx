@@ -43,7 +43,8 @@ const [width, setWidth] = useState(BAR_WIDTH);
                 display: {xs:'none',md:'flex'},
                 height:'100vh',
                 bgcolor:'background.paper',
-                color:'default'
+                color:'default',
+                overflowX:'hidden',
              }}
 
 

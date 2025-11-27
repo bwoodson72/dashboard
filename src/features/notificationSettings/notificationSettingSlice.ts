@@ -10,7 +10,7 @@ const initialState: NotificationSettingsState = {
     pushNotifications: true,
 };
 
-const notificationSettingSlice = createSlice({
+export const notificationSettingSlice = createSlice({
     name: 'notificationSettings',
     initialState,
     reducers: {

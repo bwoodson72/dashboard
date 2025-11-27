@@ -93,7 +93,7 @@ const sidePanelOpen = useSelector((state:RootState) => state.sidePanel.isOpen);
                  {
                      hovered &&
                      <Typography variant='h6' sx={{
-
+                      ml:2,
                      fontSize: size,
                      fontWeight:'bold',
                  }}>{label}</Typography>}
