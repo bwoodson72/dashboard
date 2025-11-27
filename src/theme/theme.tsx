@@ -7,46 +7,34 @@ import {useSelector} from "react-redux";
 
 
 const darkTheme: ThemeOptions = {
-  palette: {
-    mode: 'dark',
-    primary: { main: '#9799af', dark: '#191a20', light: '#e0e7ff' },
-    secondary: { main: '#a9a9c8', dark: '#40404e', light: '#9999a3' },
-    background: { default: '#020204', paper: '#021472' },
-  },
-    components: {
-        MuiLink: {
-            styleOverrides: {
-                root: { textDecoration: 'none', color: 'inherit' },
-            },
-            defaultProps: { underline: 'none' },
+    palette: {
+        mode: 'dark',
+        primary: {
+            main: '#1976d2',
         },
-    }
+        secondary: {
+            main: '#b96f09',
+        },
+        background: {
+            paper: '#00124a',
+        },
+    },
 };
 
 const lightTheme: ThemeOptions = {
     palette: {
         mode: 'light',
         primary: {
-            main: '#1948d2',
-            light: '#726dd6',
+            main: '#092781',
         },
         secondary: {
-            main: '#2749b0',
-            dark: '#091027',
+            main: '#b96f09',
         },
         background: {
-            paper: '#afafb9',
-            default: '#e8e8e8',
+            default: '#adadaf',
+            paper: '#99999a',
         },
     },
-    components: {
-        MuiLink: {
-            styleOverrides: {
-                root: { textDecoration: 'none' },
-            },
-            defaultProps: { underline: 'none' },
-        },
-    }
 };
 
 export const darkMode: Theme = createTheme(darkTheme);

@@ -1,3 +1,10 @@
+@import 'tailwindcss';
+
+
+.uiText {
+  @apply text-gray-300;
+}
+
 /*:root {*/
 /*  --background: #ffffff;*/
 /*  --foreground: #171717;*/

@@ -16,10 +16,11 @@ import {toggleDarkMode} from "@/features/darkMode/darkModeSlice";
  */
 export function DarkModeToggle():React.JSX.Element{
     const isDarkMode = useSelector((state:RootState)=>state.darkMode.isDarkMode);
+
     const dispatch = useDispatch();
     return (
         <IconButton aria-label="toggle dark mode">
-            {isDarkMode? <DarkModeIcon sx={{color:'secondary.light'}} onClick={()=>dispatch(toggleDarkMode())}/> : <LightModeIcon sx={{color:'secondary.light'}} onClick={()=>dispatch(toggleDarkMode())}/>}
+            {isDarkMode? <DarkModeIcon data-testid="dark-mode-icon" sx={{color:'#ffffff'}} onClick={()=>dispatch(toggleDarkMode())}/> : <LightModeIcon data-testid="light-mode-icon" sx={{color:'#ffffff'}} onClick={()=>dispatch(toggleDarkMode())}/>}
         </IconButton>
     )
 }

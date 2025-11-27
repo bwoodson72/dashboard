@@ -2,8 +2,10 @@
 import {configureStore} from '@reduxjs/toolkit';
 import {darkModeSlice} from "@/features/darkMode/darkModeSlice";
 import {sidePanelSlice} from "@/features/sidePanel/sidePanelSlice";
-import {apiSlice} from "@/features/api/apiSlice";
-import { setupListeners } from '@reduxjs/toolkit/query'
+import { dashApi} from "@/features/api/apiSlice";
+import { setupListeners } from '@reduxjs/toolkit/query';
+import { animationSettingsSlice } from '@/features/animationSettings/animationSlice';
+import { notificationSettingSlice } from '@/features/notificationSettings/notificationSettingSlice';
 
 
 
@@ -25,7 +27,9 @@ export const store = configureStore({
     reducer:{
         darkMode: darkModeSlice.reducer,
         sidePanel: sidePanelSlice.reducer,
-        [apiSlice.reducerPath]:apiSlice.reducer,
+        [dashApi.reducerPath]:dashApi.reducer,
+        animationSettings: animationSettingsSlice.reducer,
+        notificationSettings: notificationSettingSlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(dashApi.middleware),

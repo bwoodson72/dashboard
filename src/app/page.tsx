@@ -19,6 +19,8 @@ export default function Page():React.JSX.Element{
         <Container maxWidth='xl'>
 
             <Typography>Home</Typography>
+
+
         </Container>
     )
 }

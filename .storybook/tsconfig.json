@@ -1,10 +1,13 @@
 {
+  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "target": "es2016",
-    "module": "commonjs",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "skipLibCheck": true
-  }
+    // You can override or add Storybook‑specific options here if needed,
+    // but usually inheriting from the root is enough.
+    "types": ["node", "jest"] // optional; adjust/remove if you don't use these
+  },
+  "include": [
+    "../src/**/*",
+    "./**/*.ts",
+    "./**/*.tsx"
+  ]
 }

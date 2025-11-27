@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# dashboard-demo
 
-## Getting Started
+A simple demo dashboard project for building and testing UI components, widgets and data visualizations. Intended as a starter template — update stack, scripts and docs to match the project's actual tooling.
 
-First, run the development server:
+## Features
+- Responsive dashboard layout
+- Pluggable widgets and panels
+- Sample data and mock API
+- Theme support (light/dark)
+- Build and run scripts for development and production
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Tech (example)
+- Node.js (>=14)
+- Frontend framework: React / Vue / Svelte (replace as appropriate)
+- Bundler: Vite / Webpack / Parcel (update to match project)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Prerequisites
+- Node.js and npm or yarn installed
+- (Optional) Docker if using containerized backend
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Quickstart
+1. Clone the repo
+    - git clone <repo-url>
+2. Install dependencies
+    - npm install
+    - or
+    - yarn
+3. Start development server
+    - npm run dev
+    - or
+    - yarn dev
+4. Build for production
+    - npm run build
+    - or
+    - yarn build
+5. Run tests
+    - npm test
+    - or
+    - yarn test
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project structure (example)
+- src/ — application source code (components, views, styles)
+- public/ — static assets
+- tests/ — unit / integration tests
+- scripts/ — helper scripts
+- .env.example — environment variables template
 
-## Learn More
+## Environment
+Copy and edit .env.example to .env for local settings (API endpoints, feature flags, keys).
 
-To learn more about Next.js, take a look at the following resources:
+## Development notes
+- Use feature branches and open a pull request for changes.
+- Linting and formatting via configured tools (ESLint, Prettier).
+- Update changelog or PR description for user-facing changes.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contributing
+- Fork the repository, create a branch, submit a pull request.
+- Add tests for new features and run the test suite before opening a PR.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## License
+MIT — see LICENSE file or add one to the project.
 
-## Deploy on Vercel
+## Contact / Support
+Open an issue in the repository for bugs, feature requests, or setup problems.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Customize the sections above to reflect the real tech stack, scripts and conventions used in this repository.

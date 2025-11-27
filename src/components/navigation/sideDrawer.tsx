@@ -3,12 +3,13 @@
 
 
 import React from "react";
-import { Drawer, Box, Container, Tooltip } from "@mui/material";
+import {Drawer, Box, Container, Toolbar} from "@mui/material";
 import { ClickAwayListener } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleSidePanel } from "@/features/sidePanel/sidePanelSlice";
 import { RootState } from "@/app/store";
-import NavLink from "./navlink";
+import {NavLink} from "./navlink";
+import {LoginButton} from "./loginButton";
 
 // This component renders a left drawer aligned under a 70px top bar,
 // positioned adjacent to the icon rail (assumed 61px wide).
@@ -24,26 +25,9 @@ export function SideDrawer(): React.JSX.Element {
     <Drawer
       anchor="left"
       open={sidePanelOpen}
-      // Use slots/slotProps in MUI v7 instead of PaperProps
-      slotProps={{
-        paper: {
-          sx: {
-            position: 'fixed',
-            top: TOP_BAR_HEIGHT,
-            left: ICON_RAIL_WIDTH,
-            width: 250,
-            height: `calc(100dvh - ${TOP_BAR_HEIGHT}px)`,
-            display: 'flex',
-            flexDirection: 'column',
-            overflow: 'hidden',
-            bgcolor: 'background.paper',
-          },
-        },
-      }}
-      // Keep the Drawer mounted to avoid layout shift when toggling
-      keepMounted
-      ModalProps={{ keepMounted: true }}
+
     >
+        <Toolbar/>
       <ClickAwayListener onClickAway={() =>sidePanelOpen&& dispatch(toggleSidePanel())}>
         <Container
           maxWidth="sm"
@@ -55,55 +39,49 @@ export function SideDrawer(): React.JSX.Element {
             flexDirection: 'column',
             justifyContent: 'space-between',
             px: 0,
+
           }}
         >
+
           {/* Main navigation */}
-          <Box sx={{ mt: 1, px: 1 }}>
-            <Tooltip title="Main View" placement="right-start" arrow>
+          <Box sx={{ mt: 1,ml:2, px: 1, display: 'flex', flexDirection: 'column', gap: 1, alignItems: 'flex-start' }}>
 
-                <NavLink href="/" label="Home" />
 
-            </Tooltip>
-            <Tooltip title="Customer info and orders" placement="right-start" arrow>
+                <NavLink variant='text' size='1.2rem' href="/" label="Home" />
 
-                <NavLink href="/customers" label="Customers" />
 
-            </Tooltip>
-            <Tooltip title="Products and Inventory" placement="right-start" arrow>
 
-                <NavLink href="/products" label="Products" />
+                <NavLink size='1.2rem' variant='text' href="/customers" label="Customers" />
 
-            </Tooltip>
-            <Tooltip title="Orders to be fulfilled" placement="right-start" arrow>
 
-                <NavLink href="/orders" label="Orders" />
+                <NavLink size='1.2rem' variant='text' href="/products" label="Products" />
 
-            </Tooltip>
-            <Tooltip title="Sales and reports" placement="right-start" arrow>
 
-                <NavLink href="/sales" label="Sales" />
 
-            </Tooltip>
-            <Tooltip title="Messages and notifications" placement="right-start" arrow>
+                <NavLink size='1.2rem' variant='text' href="/orders" label="Orders" />
 
-                <NavLink href="/messages" label="Messages" />
 
-            </Tooltip>
-              <NavLink href="/customers/details" label="Customer Detail" />
+
+                <NavLink size='1.2rem' variant='text' href="/sales" label="Sales" />
+
+
+
+                <NavLink size='1.2rem' variant='text' href="/messages" label="Messages" />
+
+
+              <NavLink size='1.2rem' variant='text' href="/customers/details" label="Customer Detail" />
           </Box>
 
           {/* Secondary navigation */}
-          <Box sx={{ px: 1, pb: 1 }}>
-            <Tooltip title="Account settings" placement="right-start" arrow>
+          <Box  sx={{ mt: 1,ml:2, px: 1, display: 'flex', flexDirection: 'column', gap: 1, alignItems: 'flex-start' }}>
 
-                <NavLink href="/settings" label="Settings" />
+            <LoginButton/>
+                <NavLink size='1.2rem'variant='text' href="/settings" label="Settings" />
 
-            </Tooltip>
-            <Tooltip title="Documentation and faqs" placement="right-start" arrow>
 
-                <NavLink href="/help" label="Help" />
+                <NavLink size='1.2rem' variant={'text'} href="/help" label="Help" />
 
-            </Tooltip>
+
           </Box>
         </Container>
       </ClickAwayListener>

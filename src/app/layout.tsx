@@ -10,6 +10,8 @@ import {store} from './store';
 import {ReduxProvider} from "@/components/reduxProvider";
 import {IconSideBar} from "@/components/navigation/iconSideBar";
 import {SideDrawer} from "@/components/navigation/sideDrawer";
+import { FadeAnimation } from "@/components/animations/fadeAnimation";
+
 
 /**
  * Next.js route-level metadata for the application. Adjust as needed per route.
@@ -39,6 +41,7 @@ export default function RootLayout({
     <html lang="en">
 
       <body >
+
       <AppRouterCacheProvider>
 
           <ReduxProvider store={store}>
@@ -46,29 +49,30 @@ export default function RootLayout({
 
               <ClientTheme >
                   <CssBaseline/>
-
+<FadeAnimation>
+      
                   <Grid container spacing={1}>
       <Grid size={{sm: 12}}>
       <TopBar/>
       </Grid>
-      <Grid size={{sm:2}}>
+      <Grid size={{sm:1}}>
       <IconSideBar/>
-          <SideDrawer/>
+          {/*<SideDrawer/>*/}
       </Grid>
 
 
 
-        <Grid size={{sm:10}}>
+        <Grid size={{sm:11}}>
             <Container maxWidth="xl">
         {children}
             </Container>
         </Grid>
         </Grid>
-
-
+        </FadeAnimation>
     </ClientTheme>
 
           </ReduxProvider>
+
       </AppRouterCacheProvider>
       </body>
 

@@ -1,9 +1,8 @@
 'use client';
 import React from 'react';
-import { IconButton, Tooltip } from '@mui/material';
-import {useSelector, useDispatch} from 'react-redux';
+import { IconButton } from '@mui/material';
+import {useDispatch} from 'react-redux';
 import {toggleSidePanel} from "@/features/sidePanel/sidePanelSlice";
-import {RootState} from "@/app/store";
 
 /**
  * Props for the `DrawerToggle` component.
@@ -44,12 +43,11 @@ type DrawerToggleProps = {
 
 export function DrawerToggle({ children}: DrawerToggleProps): React.JSX.Element {
     const dispatch = useDispatch();
-    const isOpen = useSelector((state:RootState) => state.sidePanel.isOpen);
     return (
-        <Tooltip title={isOpen ? 'Close menu' : 'Open menu'}>
-            <IconButton sx={{color:'secondary.light'}} onClick={()=>dispatch(toggleSidePanel())} aria-label="toggle drawer" edge="start" >
+
+            <IconButton sx={{color:'#ffffff', display:{md:'none'}}} onClick={()=>dispatch(toggleSidePanel())} aria-label="toggle drawer" edge="start" >
                 {children}
             </IconButton>
-        </Tooltip>
+
     )
 }

@@ -13,6 +13,7 @@ datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
+  relationMode      = "prisma"
 }
 
 model Customer {
@@ -29,6 +30,7 @@ model Customer {
 }
 
 // ... existing code ...
+
 model Order {
   id          Int         @id @default(autoincrement())
   customerId  Int
@@ -39,12 +41,13 @@ model Order {
   updatedAt   DateTime    @updatedAt
   notes       String?
 
-  customer    Customer    @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  items       OrderItem[] // <-- opposite side of OrderItem.order
+  customer Customer    @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  items    OrderItem[] // <-- opposite side of OrderItem.order
 
   @@index([customerId])
   @@index([placedAt])
 }
+
 enum OrderStatus {
   PENDING
   PROCESSING
@@ -61,6 +64,7 @@ enum InventoryStatus {
 }
 
 // ... existing code ...
+
 model Product {
   id          Int             @id @default(autoincrement())
   sku         String          @unique
@@ -73,23 +77,24 @@ model Product {
   createdAt   DateTime        @default(now())
   updatedAt   DateTime        @updatedAt
 
-  orderItems  OrderItem[]     // <-- opposite side of OrderItem.product
+  orderItems OrderItem[] // <-- opposite side of OrderItem.product
 
   @@index([name])
   @@index([category])
   @@index([status])
 }
 // Each row = one product in one order
-model OrderItem {
-  id         Int      @id @default(autoincrement())
-  orderId    Int
-  productId  Int
-  quantity   Int      @default(1)
-  unitPrice  Decimal  @db.Decimal(12, 2)
-  subtotal   Decimal  @db.Decimal(12, 2)
 
-  order    Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  product  Product  @relation(fields: [productId], references: [id])
+model OrderItem {
+  id        Int     @id @default(autoincrement())
+  orderId   Int
+  productId Int
+  quantity  Int     @default(1)
+  unitPrice Decimal @db.Decimal(12, 2)
+  subtotal  Decimal @db.Decimal(12, 2)
+
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
 
   @@unique([orderId, productId])
   @@index([orderId])
@@ -97,3 +102,63 @@ model OrderItem {
 }
 
 // ... existing code ...
+
+model User {
+  id            String    @id
+  name          String
+  email         String
+  emailVerified Boolean   @default(false)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @default(now()) @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+
+  @@unique([email])
+  @@map("user")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
+
+  @@map("verification")
+}

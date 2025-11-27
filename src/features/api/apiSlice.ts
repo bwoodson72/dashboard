@@ -21,7 +21,7 @@ export const dashApi = createApi(
         baseQuery: fetchBaseQuery({baseUrl: '/api/'}),
         endpoints: (build) => ({
             getCustomerSummary: build.query({
-                query:(name)=>`customers/${name}`
+                query:(name)=>`customers/search?search=${name}`
             })
         }),
 
