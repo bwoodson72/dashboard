@@ -6,6 +6,7 @@ import { dashApi} from "@/features/api/apiSlice";
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { animationSettingsSlice } from '@/features/animationSettings/animationSlice';
 import { notificationSettingSlice } from '@/features/notificationSettings/notificationSettingSlice';
+import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 
 
 
@@ -39,3 +40,22 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 setupListeners(store.dispatch);
+
+/**
+ * Typed Redux hooks for use throughout the application.
+ * These hooks provide full TypeScript support without needing to manually type
+ * the state or dispatch function in each component.
+ *
+ * @example
+ * ```typescript
+ * // Instead of:
+ * const dispatch = useDispatch();
+ * const state = useSelector((state: RootState) => state.darkMode);
+ *
+ * // Use:
+ * const dispatch = useAppDispatch();
+ * const isDarkMode = useAppSelector((state) => state.darkMode.isDarkMode);
+ * ```
+ */
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

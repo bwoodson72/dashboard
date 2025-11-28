@@ -1,38 +1,85 @@
 'use client'
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { Button, Box, TextField } from "@mui/material";
 import { z } from "zod";
 import {Form, Field} from 'react-final-form';
 import {useGetCustomerSummaryQuery} from "@/features/api/apiSlice";
-import {useState} from "react";
 
+type SearchBarProps = {
+    setIsLoading: (loading: boolean) => void;
+    setError: (error: string | null) => void;
+    setCustomerData: (data: unknown[]) => void;
+};
 
-export function SearchBar({setIsLoading, setError, setCustomerData}) {
+const VALIDATION_SCHEMA = z.object({ 
+    search: z.string().min(1, "Search query is required") 
+});
 
-    // Define the validation schema for the form
-    const schema = z.object({ search: z.string().min(1, "Required") });
+/**
+ * Search bar component for searching customers.
+ * 
+ * Uses React Final Form for form management and RTK Query for data fetching.
+ * Automatically syncs loading, error, and data states with parent component.
+ * 
+ * @param props - Component props
+ * @param props.setIsLoading - Callback to update loading state in parent
+ * @param props.setError - Callback to update error state in parent
+ * @param props.setCustomerData - Callback to update customer data in parent
+ */
+export function SearchBar({setIsLoading, setError, setCustomerData}: SearchBarProps): React.JSX.Element {
+    const [searchQuery, setSearchQuery] = useState<string | undefined>(undefined);
+    
+    // Only run query when searchQuery is defined and not empty
+    const {data, error, isLoading} = useGetCustomerSummaryQuery(
+        searchQuery || '', 
+        { skip: !searchQuery || searchQuery.trim().length === 0 }
+    );
 
-  // State to hold the search query
-  const [searchQuery, setSearchQuery] = useState<string|undefined>("");
-  // Query hook to fetch customer data based on the search query
-    const {data, error,isLoading} = useGetCustomerSummaryQuery(searchQuery);
+    // Sync query state with parent component
+    useEffect(() => {
+        setIsLoading(isLoading);
+    }, [isLoading, setIsLoading]);
 
-  //validate function to check if the form is valid
-  function validate(values: { search?: string }) {
-    const parsed = schema.safeParse(values);
-    if (parsed.success) return {};
-    // return at least one error to block submit
-    return { search: parsed.error.issues[0]?.message ?? "Invalid" };
-  }
+    useEffect(() => {
+        if (error) {
+            const errorMessage = 'data' in error && error.data 
+                ? String(error.data) 
+                : 'An error occurred while searching';
+            setError(errorMessage);
+        } else {
+            setError(null);
+        }
+    }, [error, setError]);
 
-  // This stub will log when the form is valid and submitted
-  const onSubmit = (values: { search?: string }) => {
-    console.log("submitted", values);
-    setSearchQuery(values.search);
-    setIsLoading(isLoading);
-    if(error){setError(error.message)}
-    if(data){setCustomerData(data)}
-  };
+    useEffect(() => {
+        // Clear customer data when search query is empty or query is skipped
+        const shouldSkip = !searchQuery || searchQuery.trim().length === 0;
+        if (shouldSkip) {
+            setCustomerData([]);
+            return;
+        }
+        
+        // Update customer data when query results are available
+        if (data) {
+            setCustomerData(Array.isArray(data) ? data : []);
+        } else if (data === undefined && !isLoading) {
+            // Clear data when query completes but returns undefined
+            setCustomerData([]);
+        }
+    }, [data, searchQuery, isLoading, setCustomerData]);
+
+    const validate = (values: { search?: string }) => {
+        const parsed = VALIDATION_SCHEMA.safeParse(values);
+        if (parsed.success) return {};
+        return { search: parsed.error.issues[0]?.message ?? "Invalid input" };
+    };
+
+    const onSubmit = (values: { search?: string }) => {
+        const trimmedQuery = values.search?.trim();
+        if (trimmedQuery) {
+            setSearchQuery(trimmedQuery);
+        }
+    };
 
   return (
     <Form

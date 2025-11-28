@@ -1,145 +1,159 @@
 'use client'
 import Link from 'next/link';
-import {Typography, Box, Button} from '@mui/material';
-import React from 'react';
+import {Typography, Box, Button, IconButton} from '@mui/material';
+import React, {useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {toggleSidePanel} from "@/features/sidePanel/sidePanelSlice";
-import {IconButton} from "@mui/material";
 import {RootState} from "@/app/store";
-import {selectIsDarkMode} from "@/features/darkMode/darkModeSlice";
-
 
 type CommonProps = {
     href: string;
-     size?:string;
-     icon?:React.ReactNode;
-     label?:string;
-     variant?:'contained'|'icon'|'text';
-     hovered?:boolean;
-     color?:string;
-
+    size?: string;
+    icon?: React.ReactNode;
+    hovered?: boolean;
 };
-type IconVariant =
-    CommonProps&
-{
-    variant:'icon';
-    icon:React.ReactNode;
-    label?:string;
-}
-type ContainedVariant = CommonProps&{
-    variant:'contained';
-    label:string;
-    icon?:React.ReactNode;
 
-}
-type TextVariant = CommonProps&{
-    variant:'text';
-    label:string;
-}
+type IconVariant = CommonProps & {
+    variant: 'icon';
+    icon: React.ReactNode;
+    label?: string;
+};
 
-type NavLinkProps = IconVariant | ContainedVariant|TextVariant;
+type ContainedVariant = CommonProps & {
+    variant: 'contained';
+    label: string;
+    icon?: React.ReactNode;
+};
 
+type TextVariant = CommonProps & {
+    variant: 'text';
+    label: string;
+    icon?: React.ReactNode;
+};
 
-
+type NavLinkProps = IconVariant | ContainedVariant | TextVariant;
 
 
+
+
+
+
+const DEFAULT_FONT_SIZE = '1.2rem';
+
+const linkBoxStyles = {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 1,
+    textDecoration: 'none',
+};
 
 /**
- * Renders a navigation link component with different variants and optional icon and label.
+ * Navigation link component with multiple variants for different use cases.
  *
- * @param {Object} props - The properties for the NavLink component.
- * @param {string} props.href - The URL to navigate to when the link is clicked.
- * @param {string} props.label - The text to display for the navigation link.
- * @param {React.ReactNode} [props.icon] - The optional icon to display with the navigation link.
- * @param {string} props.variant - The variant of the component, can be 'contained', 'icon', or default.
- * @param {string} [props.size='1.2rem'] - The font size for the label in the default variant.
- * @returns {React.JSX.Element} - The rendered navigation link component.
+ * @param props - Component props
+ * @param props.href - The URL to navigate to
+ * @param props.variant - Visual variant: 'icon', 'contained', or 'text'
+ * @param props.label - Text label (required for 'contained' and 'text' variants)
+ * @param props.icon - Optional icon element
+ * @param props.hovered - For 'icon' variant: whether to show expanded label
+ * @param props.size - Font size for label text (default: '1.2rem')
+ * @returns Rendered navigation link component
  */
-export  function NavLink(props:NavLinkProps ):React.JSX.Element {
+export function NavLink(props: NavLinkProps): React.JSX.Element {
+    const dispatch = useDispatch();
+    const sidePanelOpen = useSelector((state: RootState) => state.sidePanel.isOpen);
+    const { href, size = DEFAULT_FONT_SIZE, icon, hovered } = props;
 
-//determine if we are in dark mode
-    const isDarkMode = useSelector(selectIsDarkMode);
-//determine the color of the text based on the dark mode setting
-    const textColor = isDarkMode ? 'text-gray-300' : 'text-gray-300';
+    const handleClick = useCallback(() => {
+        if (sidePanelOpen) {
+            dispatch(toggleSidePanel());
+        }
+    }, [sidePanelOpen, dispatch]);
 
-    const {href, size, label, icon, hovered, color=textColor} = props;
-const dispatch = useDispatch();
-const sidePanelOpen = useSelector((state:RootState) => state.sidePanel.isOpen);
-   let component;
-
+    // Render based on variant
     switch (props.variant) {
-     case 'contained':
-
-         component = <Button
-             variant="contained"
-             component={Link}
-             href={href}
-             onClick={()=>sidePanelOpen && dispatch(toggleSidePanel())}
-         >
-             {label}
-         </Button>
-         break;
-
-    case 'icon':
-
-        component =
-            (
-             <Box component={Link} href={href} sx={{display:'flex', justifyContent: hovered?'flex-start':'center', alignItems:'center', gap:1, textDecoration:'none'}}>
-            <IconButton
-                onClick={()=>sidePanelOpen && dispatch(toggleSidePanel())}
-
-                >
-                {icon}
-                 {
-                     hovered &&
-                     <Typography variant='h6' sx={{
-                      ml:2,
-                     fontSize: size,
-                     fontWeight:'bold',
-                 }}>{label}</Typography>}
-            </IconButton>
-             </Box>
-
-            )
-        break;
-    case 'text':
-            component =
-                (
-                <Box
-                    onClick={()=>sidePanelOpen && dispatch(toggleSidePanel())}
+        case 'contained':
+            return (
+                <Button
+                    variant="contained"
                     component={Link}
-                     href={href}
-                     sx={{display:'flex', justifyContent:'center', alignItems:'center', gap:1, textDecoration:'none'}}>
-                    <Button variant="text" sx={{color:'#ffffff'}}>
-                        <Typography  sx={{ textAlign:'center', textDecoration:'none', fontSize:size, fontWeight:'bold'}}  >{icon && icon } {label}</Typography>
+                    href={href}
+                    onClick={handleClick}
+                >
+                    {props.label}
+                </Button>
+            );
+
+        case 'icon':
+            return (
+                <Box
+                    component={Link}
+                    href={href}
+                    sx={{
+                        ...linkBoxStyles,
+                        justifyContent: hovered ? 'flex-start' : 'center',
+                    }}
+                >
+                    <IconButton onClick={handleClick}>
+                        {icon}
+                        {hovered && props.label && (
+                            <Typography
+                                variant="h6"
+                                sx={{
+                                    ml: 2,
+                                    fontSize: size,
+                                    fontWeight: 'bold',
+                                }}
+                            >
+                                {props.label}
+                            </Typography>
+                        )}
+                    </IconButton>
+                </Box>
+            );
+
+        case 'text':
+            return (
+                <Box
+                    component={Link}
+                    href={href}
+                    onClick={handleClick}
+                    sx={{
+                        ...linkBoxStyles,
+                        justifyContent: 'center',
+                    }}
+                >
+                    <Button variant="text">
+                        <Typography
+                            sx={{
+                                textAlign: 'center',
+                                textDecoration: 'none',
+                                fontSize: size,
+                                fontWeight: 'bold',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 1,
+                            }}
+                        >
+                            {icon && icon}
+                            {props.label}
+                        </Typography>
                     </Button>
                 </Box>
-                )
-            break;
-    default:
-        component =  (
-            <Box
-                onClick={()=>sidePanelOpen && dispatch(toggleSidePanel())}
-                component={Link}
-                href={href}
-                sx={{display:'flex', justifyContent:'center', alignItems:'center', gap:1, textDecoration:'none'}}>
-                <Button variant="contained" sx={{color:'#ffffff'}}>{label}
-                <Typography  sx={{ textAlign:'center', textDecoration:'none', fontSize:size, fontWeight:'bold'}}  >{icon && icon } {label}</Typography>
+            );
+
+        default:
+            // Fallback to contained variant for unknown variants
+            const fallbackLabel = (props as { label?: string }).label || 'Link';
+            return (
+                <Button
+                    variant="contained"
+                    component={Link}
+                    href={href}
+                    onClick={handleClick}
+                >
+                    {fallbackLabel}
                 </Button>
-
-            </Box>
-        )
-        break;
+            );
     }
-
-
-
-    return  component;
-
-
-
-
-
-
-
 }

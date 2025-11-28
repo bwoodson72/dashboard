@@ -1,90 +1,108 @@
 'use client'
-
-
-
-import React from "react";
-import {Drawer, Box, Container, Toolbar} from "@mui/material";
-import { ClickAwayListener } from "@mui/material";
+import React, {useCallback} from "react";
+import {Drawer, Box, Container, Toolbar, ClickAwayListener} from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleSidePanel } from "@/features/sidePanel/sidePanelSlice";
 import { RootState } from "@/app/store";
 import {NavLink} from "./navlink";
 import {LoginButton} from "./loginButton";
 
-// This component renders a left drawer aligned under a 70px top bar,
-// positioned adjacent to the icon rail (assumed 61px wide).
+type NavigationItem = {
+    href: string;
+    label: string;
+};
+
+const DEFAULT_FONT_SIZE = '1.2rem';
+
+/**
+ * Main navigation items for the side drawer.
+ */
+const MAIN_NAV_ITEMS: NavigationItem[] = [
+    { href: '/', label: 'Home' },
+    { href: '/customers', label: 'Customers' },
+    { href: '/products', label: 'Products' },
+    { href: '/orders', label: 'Orders' },
+    { href: '/sales', label: 'Sales' },
+    { href: '/messages', label: 'Messages' },
+    { href: '/customers/details', label: 'Customer Detail' },
+];
+
+/**
+ * Secondary navigation items (settings, help, etc.)
+ */
+const SECONDARY_NAV_ITEMS: NavigationItem[] = [
+    { href: '/settings', label: 'Settings' },
+    { href: '/help', label: 'Help' },
+];
+
+const drawerContainerStyles = {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    px: 0,
+};
+
+const navBoxStyles = {
+    mt: 1,
+    ml: 2,
+    px: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 1,
+    alignItems: 'flex-start',
+};
+
+/**
+ * Side drawer component that slides in from the left on mobile/tablet screens.
+ * Contains main navigation links and secondary navigation items.
+ *
+ * The drawer opens/closes based on Redux state and can be dismissed by clicking away.
+ */
 export function SideDrawer(): React.JSX.Element {
-  const sidePanelOpen = useSelector((state: RootState) => state.sidePanel.isOpen);
-  const dispatch = useDispatch();
+    const sidePanelOpen = useSelector((state: RootState) => state.sidePanel.isOpen);
+    const dispatch = useDispatch();
 
-  const TOP_BAR_HEIGHT = 70;
-  const ICON_RAIL_WIDTH = 61;
+    const handleClickAway = useCallback(() => {
+        if (sidePanelOpen) {
+            dispatch(toggleSidePanel());
+        }
+    }, [sidePanelOpen, dispatch]);
 
+    return (
+        <Drawer anchor="left" open={sidePanelOpen}>
+            <Toolbar />
+            <ClickAwayListener onClickAway={handleClickAway}>
+                <Container maxWidth="sm" sx={drawerContainerStyles}>
+                    {/* Main navigation */}
+                    <Box sx={navBoxStyles}>
+                        {MAIN_NAV_ITEMS.map((item) => (
+                            <NavLink
+                                key={item.href}
+                                variant="text"
+                                size={DEFAULT_FONT_SIZE}
+                                href={item.href}
+                                label={item.label}
+                            />
+                        ))}
+                    </Box>
 
-  return (
-    <Drawer
-      anchor="left"
-      open={sidePanelOpen}
-
-    >
-        <Toolbar/>
-      <ClickAwayListener onClickAway={() =>sidePanelOpen&& dispatch(toggleSidePanel())}>
-        <Container
-          maxWidth="sm"
-          sx={{
-            // Fill the drawer paper
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            px: 0,
-
-          }}
-        >
-
-          {/* Main navigation */}
-          <Box sx={{ mt: 1,ml:2, px: 1, display: 'flex', flexDirection: 'column', gap: 1, alignItems: 'flex-start' }}>
-
-
-                <NavLink variant='text' size='1.2rem' href="/" label="Home" />
-
-
-
-                <NavLink size='1.2rem' variant='text' href="/customers" label="Customers" />
-
-
-                <NavLink size='1.2rem' variant='text' href="/products" label="Products" />
-
-
-
-                <NavLink size='1.2rem' variant='text' href="/orders" label="Orders" />
-
-
-
-                <NavLink size='1.2rem' variant='text' href="/sales" label="Sales" />
-
-
-
-                <NavLink size='1.2rem' variant='text' href="/messages" label="Messages" />
-
-
-              <NavLink size='1.2rem' variant='text' href="/customers/details" label="Customer Detail" />
-          </Box>
-
-          {/* Secondary navigation */}
-          <Box  sx={{ mt: 1,ml:2, px: 1, display: 'flex', flexDirection: 'column', gap: 1, alignItems: 'flex-start' }}>
-
-            <LoginButton/>
-                <NavLink size='1.2rem'variant='text' href="/settings" label="Settings" />
-
-
-                <NavLink size='1.2rem' variant={'text'} href="/help" label="Help" />
-
-
-          </Box>
-        </Container>
-      </ClickAwayListener>
-    </Drawer>
-  );
+                    {/* Secondary navigation */}
+                    <Box sx={navBoxStyles}>
+                        <LoginButton />
+                        {SECONDARY_NAV_ITEMS.map((item) => (
+                            <NavLink
+                                key={item.href}
+                                variant="text"
+                                size={DEFAULT_FONT_SIZE}
+                                href={item.href}
+                                label={item.label}
+                            />
+                        ))}
+                    </Box>
+                </Container>
+            </ClickAwayListener>
+        </Drawer>
+    );
 }
